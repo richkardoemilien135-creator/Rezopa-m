@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RezoPam Pro - Monitizasyon Final</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding-bottom: 70px; overflow-x: hidden; }
+
+        /* 1. SPLASH SCREEN AK LOGO INYIK */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 99999; color: white; transition: opacity 0.8s ease;
+        }
+        .logo-box {
+            width: 130px; height: 130px; background: #1877f2; border-radius: 40px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; transform: rotate(-5deg);
+            box-shadow: 0 15px 30px rgba(24, 119, 242, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+        .logo-box i { font-size: 50px; color: #ffca28; transform: rotate(5deg); }
+        .brand-text { font-size: 48px; font-weight: 900; margin-top: 25px; letter-spacing: -2px; }
+        .brand-text span { color: #ffca28; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-15px) rotate(-5deg); } }
+        .loader { margin-top: 30px; width: 35px; height: 35px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #ffca28; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* 2. HEADER */
+        header { background: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #ddd; }
+        header h1 { color: #1877f2; font-size: 24px; font-weight: 800; cursor: pointer; }
+        .wallet-pill { background: #e7f3ff; color: #1877f2; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; }
+
+        /* 3. ADS MARKETPLACE */
+        .ads-banner { background: #fffbe6; padding: 15px; margin: 10px; border: 1px dashed #ffc107; border-radius: 12px; text-align: center; }
+        .btn-ads { background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-top: 5px; cursor: pointer; }
+
+        /* 4. FEED & VIDEO */
+        .post { background: white; margin-bottom: 10px; border-bottom: 1px solid #ddd; }
+        .post-header { padding: 12px; display: flex; align-items: center; gap: 10px; }
+        .video-container { width: 100%; background: black; }
+        video { width: 100%; max-height: 500px; display: block; }
+        
+        .post-actions { padding: 10px; display: flex; justify-content: space-around; border-top: 1px solid #f0f2f5; }
+        .action-btn { background: none; border: none; color: #65676b; font-weight: 600; cursor: pointer; font-size: 14px; }
+
+        /* 5. ESPAS PIBLISITE ADMOB */
+        .ad-slot { background: white; margin: 10px 0; padding: 15px; border-top: 2px solid #ffca28; border-bottom: 2px solid #ffca28; text-align: center; }
+        .ad-label { font-size: 10px; color: #aaa; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .ad-placeholder { width: 100%; min-height: 250px; background: #f8f9fa; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; color: #888; }
+
+        /* 6. SEKSYON KOMANTÈ */
+        .comment-section { padding: 10px; background: #f9f9f9; }
+        .comment-list { max-height: 150px; overflow-y: auto; margin-bottom: 10px; }
+        .single-comment { background: #eef0f2; padding: 8px 12px; border-radius: 15px; margin-bottom: 5px; font-size: 13px; width: fit-content; max-width: 90%; word-wrap: break-word; }
+        .single-comment b { color: #1877f2; margin-right: 5px; }
+        .comment-input-box { display: flex; gap: 8px; }
+        .comment-input-box input { flex: 1; padding: 10px 15px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
+        .comment-input-box button { background: #1877f2; color: white; border: none; padding: 10px 15px; border-radius: 25px; font-weight: bold; }
+
+        /* 7. MODALS */
+        .modal-full { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; display: none; flex-direction: column; padding: 20px; }
+        .blue-btn { background: #1877f2; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 15px; cursor: pointer; }
+
+        /* 8. NAV BAR */
+        nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #ddd; z-index: 1000; }
+        nav i { font-size: 24px; color: #65676b; cursor: pointer; }
+        nav i.active { color: #1877f2; }
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen">
+        <div class="logo-box"><i class="fas fa-bolt"></i></div>
+        <h1 class="brand-text">REZO<span>PAM</span></h1>
+        <p style="opacity: 0.7; letter-spacing: 3px; font-size: 12px;">KONEKTE • TOUCHE • GRANDI</p>
+        <div class="loader"></div>
+    </div>
+
+    <header>
+        <h1 onclick="location.reload()">RezoPam</h1>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="wallet-pill" onclick="openModal('wallet-modal')">💰 $<span id="bal-top">0.00</span></div>
+            <i class="fas fa-comment-dots" style="color: #65676b; font-size: 22px;"></i>
+        </div>
+    </header>
+
+    <div id="feed">
+        <div class="post">
+            <div class="post-header">
+                <div style="width:40px; height:40px; background:#1877f2; border-radius:50%; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold;">RP</div>
+                <div><b>RezoPam Promo</b><br><small>Sponsorisé • 🌎</small></div>
+            </div>
+            <div class="video-container">
+                <video loop muted autoplay playsinline onclick="this.muted=!this.muted">
+                    <source src="https://v.ft-static.com/video/472859187/preview.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="post-actions">
+                <button class="action-btn"><i class="far fa-thumbs-up"></i> Like</button>
+                <button class="action-btn" onclick="earnMoney()" style="color: #1877f2;"><i class="fas fa-play-circle"></i> Gade & Fè Kòb</button>
+                <button class="action-btn"><i class="fas fa-share"></i> Pataje</button>
+            </div>
+            <div class="comment-section">
+                <div class="comment-list" id="list-1"></div>
+                <div class="comment-input-box">
+                    <input type="text" id="in-1" placeholder="Ekri yon kòmantè...">
+                    <button onclick="addComment('list-1', 'in-1')">Voye</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-slot">
+            <span class="ad-label">Piblisite</span>
+            <div class="ad-placeholder">
+                <div style="text-align:center;">
+                    <i class="fas fa-rectangle-ad" style="font-size: 40px; color: #ddd;"></i>
+                    <p>Espas Banner AdMob</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="post">
+            <div class="post-header">
+                <div style="width:40px; height:40px; background:#ffca28; border-radius:50%; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold;">RP</div>
+                <div><b>Mondyal Video</b><br><small>Public • 🌎</small></div>
+            </div>
+            <div class="video-container">
+                <video loop muted autoplay playsinline onclick="this.muted=!this.muted">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="post-actions">
+                <button class="action-btn">Like</button>
+                <button class="action-btn" onclick="earnMoney()" style="color: #1877f2;">Gade & Fè Kòb</button>
+                <button class="action-btn">Pataje</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="wallet-modal" class="modal-full">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Bous Mwen 💰</h2>
+            <i class="fas fa-times" onclick="closeModal('wallet-modal')" style="font-size: 24px; cursor: pointer;"></i>
+        </div>
+        <div style="background: #f8f9fa; padding: 30px; border-radius: 20px; margin-top: 20px; text-align: center;">
+            <p>Balans ou</p>
+            <h1 style="font-size: 45px; color: #28a745;">$<span id="bal-modal">0.00</span></h1>
+            <p style="color: red; font-size: 11px; margin-top: 10px;">* RezoPam pran 15% frè sou chak retrè MonCash.</p>
+        </div>
+        <input type="number" id="withdraw-amount" placeholder="Konbe w ap retire?" style="width: 100%; padding: 15px; margin-top: 20px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px;">
+        <button class="blue-btn" onclick="alert('Demann retrè voye! Admin lan ap kontakte w.')">RETIRE SOU MONCASH</button>
+        <button class="blue-btn" style="background: #28a745;" onclick="window.open('https://wa.me/8494706077')">PAGYE PIBLISITE</button>
+    </div>
+
+    <nav>
+        <i class="fas fa-home active"></i>
+        <i class="fas fa-search"></i>
+        <i class="fas fa-plus-square"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-user-circle" onclick="openModal('wallet-modal')"></i>
+    </nav>
+
+    <script>
+        let balans = 0;
+
+        // Retire Splash Screen apre 3 segonn
+        window.onload = () => {
+            setTimeout(() => {
+                const s = document.getElementById('splash-screen');
+                s.style.opacity = '0';
+                setTimeout(() => s.style.display = 'none', 800);
+            }, 3000);
+        };
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // Sistèm Monitizasyon
+        function earnMoney() {
+            balans += 0.05;
+            document.getElementById('bal-top').innerText = balans.toFixed(2);
+            document.getElementById('bal-modal').innerText = balans.toFixed(2);
+            alert("Felisitasyon! Ou fè $0.05.");
+        }
+
+        // Sistèm Kòmantè
+        function addComment(lid, iid) {
+            const input = document.getElementById(iid);
+            const list = document.getElementById(lid);
+            if(input.value.trim() !== "") {
+                const div = document.createElement('div');
+                div.className = 'single-comment';
+                div.innerHTML = `<b>Mwen</b> ${input.value}`;
+                list.appendChild(div);
+                input.value = "";
+                list.scrollTop = list.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
